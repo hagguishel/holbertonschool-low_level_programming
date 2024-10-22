@@ -7,7 +7,6 @@ int main(void)
 int n;
 srand(time(0));
 n = rand() - RAND_MAX / 2;
-}
 if (last_digit < 0)
 {
 last_digit = -last_digit;
