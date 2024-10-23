@@ -1,6 +1,4 @@
 #include <stdio.h>
-/*ecrire l'alphabet
- * valider*/
 int main(void)
 {
 char letter;
