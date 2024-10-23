@@ -6,14 +6,15 @@
 int main(void)
 {
 int n;
-int last_digit of;
+int last_digit;
 srand(time(0));
 n = rand() - RAND_MAX / 2;
-if (last_digit of > 5)
+last_digit = n % 10;
+if (last_digit > 5)
 {
 printf("This and is greater than 5\n");
 }
-else if (last_digit of == 0)
+else if (last_digit == 0)
 {
 printf("and is 0\n");
 }
