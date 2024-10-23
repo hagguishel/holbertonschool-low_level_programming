@@ -1,9 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-/* more headers goes there */
-
-/* betty style doc for function main goes there */
+/**
+ * main - Entry point of the program
+ *
+ * Description: This function calculates and prints the last digit
+ * of a randomly generated number and categorizes it based on its value.
+ *
+ * Return: Always 0 (Success)
+ */
 int main(void)
 {
 int n;
