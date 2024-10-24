@@ -8,7 +8,7 @@ int main(void)
 int digit;
 for (digit = 0; digit <= 9; digit++)
 {
-printf("%d", digit);
+printf("%d\n²", digit);
 }
 return (0);
 }
