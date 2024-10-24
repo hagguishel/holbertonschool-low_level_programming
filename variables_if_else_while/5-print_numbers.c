@@ -1,20 +1,19 @@
-#include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
-/*
- * Function: main
- * --------------
- * Description: Programme principal qui imprime les chiffres de 0 Ã 9
- * sur une seule ligne avec un saut de ligne Ã  la fin
- * Parameters: void
- * Returns: 0 on success
- */
+/**
+* main - Entry point of the program
+*
+* Description: This program prints all single digit numbers
+*of base 10 starting from 0, followed by a new line.
+*
+* Return: Always 0 (Success)
+*/
 int main(void)
 {
-int digit;
-for (digit = 0; digit <= 9; digit++)
+int number;
+for (number = 0; number < 10; number++)
 {
-printf("%d\n²", digit);
+putchar(number + '0');
 }
+putchar('\n');
 return (0);
 }
