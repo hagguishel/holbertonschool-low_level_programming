@@ -6,6 +6,6 @@ for (C = 'z'; C >= 'a'; C--)
 {
 putchar (C);
 }
-putchar ('n');
-return (0);
+putchar ('\n');
+return 0;
 }

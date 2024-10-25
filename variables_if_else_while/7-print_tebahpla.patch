@@ -1,0 +1,16 @@
+diff --git a/variables_if_else_while/7-print_tebahpla b/variables_if_else_while/7-print_tebahpla
+index 9193144..b06c496 100755
+Binary files a/variables_if_else_while/7-print_tebahpla and b/variables_if_else_while/7-print_tebahpla differ
+diff --git a/variables_if_else_while/7-print_tebahpla.c b/variables_if_else_while/7-print_tebahpla.c
+index b01a067..1f2d025 100644
+--- a/variables_if_else_while/7-print_tebahpla.c
++++ b/variables_if_else_while/7-print_tebahpla.c
+@@ -6,6 +6,6 @@ for (C = 'z'; C >= 'a'; C--)
+ {
+ putchar (C);
+ }
+-putchar ('n');
+-return (0);
++putchar ('\n');
++return 0;
+ }
