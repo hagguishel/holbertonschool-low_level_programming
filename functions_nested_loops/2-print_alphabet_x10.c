@@ -6,7 +6,7 @@ int ALP;
 int A;
 for (A = 0; A <= 9; A++)
 {
-for (ALP = 'a'; ALP <= 'z'; ALP++)
+for (ALP = 'a' ; ALP <= 'z' ; ALP++)
 {
 _putchar(ALP);
 }
