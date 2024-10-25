@@ -10,7 +10,7 @@ int main(void)
 int add_numbers;
 for (add_numbers = 0; add_numbers <= 9; add_numbers++)
 {
-putchar(add_numbers +'0');
+putchar(add_numbers + '0');
 putchar('\n');
 }
 return (0);
