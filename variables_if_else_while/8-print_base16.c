@@ -9,12 +9,12 @@
 */
 int main(void)
 {
-char A;
-for (A = 0 ; A <= 9 ; A++)
+int A;
+for (A = 0; A <= 9; A++)
 {
-putchar('A' + 0);
+putchar('A' + '0');
 }
-for (A = 'a' ; A <= 'f' ; A++)
+for (A = 'a'; A <= 'f'; A++)
 {
 putchar ('A');
 }
