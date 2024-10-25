@@ -1,4 +1,7 @@
 #include <stdio.h>
+/*Ce programme imprime l'alphabet en minuscule à l'envers, de 'z' à 'a', 
+*suivi d'un retour à la ligne. Il utilise uniquement la fonction putchar
+*/et ne contient que deux appels à cette fonction.
 int main(void)
 {
 char c;
