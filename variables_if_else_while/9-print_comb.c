@@ -11,11 +11,12 @@ int main(void)
 {
 int base;
 for (base = 0; base < 10; base++)
-{
 putchar(base + '0');
-}
-putchar(' ');
+if (base < 9)
+{
 putchar(',');
+putchar(' ');
+}
 putchar('\n');
 return (0);
 }
