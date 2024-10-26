@@ -12,10 +12,12 @@
  */
 int _islower(int c)
 {
-int lower;
-	for (lower = 'a'; lower <= 'z'; lower++)
-	{
-	if (lower == c)
-	return (1);
-	}
-_putchar (lower);
+if (c >= 'a')
+{
+if (c <= 'z')
+{
+return (1);
+}
+}
+return (0);
+}
