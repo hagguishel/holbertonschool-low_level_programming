@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
-_isalpha - Vérifie si un caractère est alphabétique (minuscule ou ma
-@c: Caractère |  v
+*_isalpha - Vérifie si un caractère est alphabétique (minuscule ou ma
+*@c: Caractère |  v
 *
-Return: 1 si le caractère est une lettre alphabéti
+*Return: 1 si le caractère est une lettre alphabéti
 */
 int _isalpha(int c)
 {
