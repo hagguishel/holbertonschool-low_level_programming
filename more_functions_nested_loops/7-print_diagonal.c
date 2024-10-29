@@ -1,10 +1,11 @@
  #include "main.h"
 /**
  * print_diagonal - Dessine une ligne diagonale sur le terminal
- * @n: Nombre de fois que le caractère '\' doit être affic
- * Description: La fonction affiche une ligne diagonale en utilisant le caractèr
- * '\' `n` fois, avec chaque ligne suivante indéterminée d'un espace supplémentai
- * Si `n` est inférieur ou égal à 0, seule une nouvelle ligne est affich
+ * @n: Nombre de fois que le caractère '\' doit être affiché
+ *
+ * Description: La fonction affiche une ligne diagonale avec le caractère
+ * '\' `n` fois, chaque ligne suivante décalée d'un espace.
+ * Si `n` est ≤ 0, seule une nouvelle ligne est affichée.
  */
 void print_diagonal(int n)
 {
