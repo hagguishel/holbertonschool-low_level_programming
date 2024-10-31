@@ -14,4 +14,4 @@ while (s[count] != '\0')
 count++;
 }
 return (count);
-} 
+}
