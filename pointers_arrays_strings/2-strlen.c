@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * _strlen - Renvoie la longueur d'une chaîne de caractè
  * @s: Pointeur vers la chaîne à mesur
