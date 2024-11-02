@@ -8,7 +8,7 @@ int _atoi(char *s)
 {
 int i = 0;
 int sign = 1;
-int result = 0;
+unsigned int result = 0;
 int has_number_started = 0;
 while (s[i] != '\0')
 {
@@ -23,10 +23,10 @@ else if (s[i] >= '0' && s[i] <= '9')
 {
 has_number_started = 1;
 result = result * 10 + (s[i] - '0');
-if (sign == 1 && result < 0)
-return __INT_MAX__;
-if (sign == -1 && result > 0 && result * sign > 0)
-return __INT_MIN__;
+if (result > 2147483647)
+{
+return (sign == 1) ? -1 : 0;
+}
 }
 else if (has_number_started)
 {
@@ -36,4 +36,3 @@ i++;
 }
 return result * sign;
 }
-
