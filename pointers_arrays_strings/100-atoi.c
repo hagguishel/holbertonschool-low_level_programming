@@ -5,6 +5,9 @@
  * Return: The integer value of the converted string.
  */
 int _atoi(char *s)
+#include "main.h"
+
+int _atoi(char *s)
 {
 int i = 0;
 int sign = 1;
@@ -23,16 +26,20 @@ else if (s[i] >= '0' && s[i] <= '9')
 {
 has_number_started = 1;
 result = result * 10 + (s[i] - '0');
-if (result > 2147483647)
+if (result > 2147483648U && sign == -1)
 {
-return (sign == 1) ? -1 : 0;
+return -2147483648;
+}
+if (result > 2147483647 && sign == 1)
+{
+return -1;
 }
 }
 else if (has_number_started)
 {
-break;
+break
 }
 i++;
 }
-return result * sign;
+return (result * sign);
 }
