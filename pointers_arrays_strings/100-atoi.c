@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * _atoi - Converts a string to an integer.
+ * @s: The string to be converted.
+ *
+ * Return: The integer value of the converted string.
+ */
 int _atoi(char *s)
 {
     int i = 0;
@@ -20,13 +26,9 @@ int _atoi(char *s)
         {
             has_number_started = 1;
             result = result * 10 + (s[i] - '0');
-            if (result > 2147483648U && sign == -1)
+            if (result > 2147483647)
             {
-                return -2147483648; // Retourne INT_MIN
-            }
-            if (result > 2147483647 && sign == 1)
-            {
-                return -1; // Indique un débordement pour les positifs
+                return (sign == 1) ? -1 : 0;
             }
         }
         else if (has_number_started)
