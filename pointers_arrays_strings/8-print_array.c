@@ -1,6 +1,13 @@
 #include "main.h"
 #include <stdio.h>
-
+/**
+ * print_array - Prints n elements of an array of integers, followed by a new line
+ * @a: The array of integers
+ * @n: The number of elements of the array to be printed
+ * Description: This function prints the elements of the array separated
+ * by commas and a space. The numbers are displayed in the same order
+ * as they are stored in the array.
+ */
 void print_array(int *a, int n)
 {
 int i;
