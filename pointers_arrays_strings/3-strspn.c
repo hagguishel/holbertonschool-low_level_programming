@@ -1,18 +1,32 @@
 #include "main.h"
-#include <stdio.h>
-
 /**
- * main - check the code
- *
- * Return: Always 0.
+ * _strspn - Gets the length of a prefix substring.
+ * @s: The main string to be scanned.
+ * @accept: The string containing the characters to match in `s`.
+ * Return: The number of bytes in the initial segment of `s`
+ * which consist only of bytes from `accept`.
  */
-int main(void)
+unsigned int _strspn(char *s, char *accept)
 {
-    char *s = "hello, world";
-    char *f = "oleh";
-    unsigned int n;
-
-    n = _strspn(s, f);
-    printf("%u\n", n);
-    return (0);
+unsigned int count = 0;
+int i, j;
+int found;
+for (i = 0; s[i] != '\0'; i++)
+{
+found = 0;
+for (j = 0; accept[j] != '\0'; j++)
+{
+if (s[i] == accept[j])
+{
+found = 1;
+count++;
+break;
+}
+}
+if (!found)
+{
+break;
+}
+}
+return (count);
 }
