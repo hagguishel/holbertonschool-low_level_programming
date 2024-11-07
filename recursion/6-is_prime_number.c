@@ -4,7 +4,7 @@
 /**
  * is_prime_number - Vérifie si un nombre est premier.
  * @n: Le nombre à tester.
- * @i est la pour faire beau
+ * @i: Le diviseur potentiel pour vérifier si n est divisible
  * Return: 1 si le nombre est premier, sinon 0.
  */
 int foncrion_deux(int n, int i);
