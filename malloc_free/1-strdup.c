@@ -1,31 +1,29 @@
-#include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
 /**
- * _strdup - Crée une copie d'une chaîne de caractè
- * @str: La chaîne de caractères à dupliq
- * Return: un pointeur vers la copie de la chaîne, ou NULL en cas d'erreu
+ * _strdup - function that returns a pointer to a newly allocated space
+ * in memory which contains a copy of the string giparameter
+ * @str: The string to be duplicate
+ * Return: A pointer to the duplicated string, or NULL if insufficient memory
+ * is available
  */
 char *_strdup(char *str)
 {
-	size_t length = strlen(str);
-	size_t i;
-	char *copy = (char *)malloc(length + 1);
-
-	if (str == NULL)
-	{
-		return (NULL);
-	}
-	if (copy == NULL)
-	{
-		return (NULL);
-	}
-	for (i = 0; i < length; i++)
-	{
-	copy[i] = str[i];
-	}
-	copy[length] = '\0';
-	return (copy);
+unsigned int len = 0;
+unsigned int i;
+char *dup;
+if (str == NULL)
+return (NULL);
+while (str[len] != '\0')
+{
+len++;
+}
+dup = malloc((len + 1) * sizeof(char));
+if (dup == NULL)
+return (NULL);
+for (i = 0; i < len; i++)
+{
+dup[i] = str[i];
+}
+dup[len] = '\0';
+return (dup);
 }
