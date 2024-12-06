@@ -1,27 +1,19 @@
-#include <stdlib.h>
 #include "lists.h"
+
 /**
-* add_dnodeint - Ajoute un nouveau nœud au début d'une liste dlistint_t.
-* @head: Double pointeur vers le début de la liste.
-* @n: Valeur à insérer dans le nouveau nœud.
-*
-* Return: Adresse du nouvel élément, ou NULL en cas d'échec.
-*/
-dlistint_t *add_dnodeint(dlistint_t **head, const int n)
+ * dlistint_len - Returns the number of elements in a doubly linked list
+ * @h: Pointer to the head of the list
+ *
+ * Return: The number of elements in the list
+ */
+size_t dlistint_len(const dlistint_t *h)
 {
-	dlistint_t *new_node;
-	new_node = malloc(sizeof(dlistint_t));
+	size_t count = 0;
 
-	if (new_node == NULL)
-	return (NULL);
-
-	new_node->n = n;
-	new_node->prev = NULL;
-	new_node->next = *head;
-
-	if (*head != NULL)
-	(*head)->prev = new_node;
-	*head = new_node;
-
-	return (new_node);
+	while (h != NULL)
+	{
+		count++;
+		h = h->next;
+	}
+	return (count);
 }
