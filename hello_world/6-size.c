@@ -2,7 +2,8 @@
 
 /**
  * main - Entry point
- * return - Always 0
+ *
+ * Return: 0 if the program executes successfully
  */
 int main(void)
 {
