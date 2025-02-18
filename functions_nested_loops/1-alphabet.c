@@ -1,10 +1,9 @@
 #include "main.h"
 #include <stdio.h>
 /**
- * main - Prints a programming quote
- *
- * Return: Always 0 (Success)
+ * print_alphabet - Prints the alphabet in lowercase
  */
+
 void print_alphabet(void)
 {
 	int i;
@@ -14,5 +13,4 @@ void print_alphabet(void)
 		_putchar(i);
 	}
 	_putchar('\n');
-	return;
 }
