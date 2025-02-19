@@ -2,8 +2,8 @@
 /**
  * jack_bauer - Affiche chaque minute de la journée (00:00 à 23:59).
  *
- * Utilise deux boucles imbriquées pour afficher les heures et minutes
- * au format HH:MM, une fois par minute, et ajoute un saut de ligne après chaque affichage.
+ * Utilise deux boucles imbriquée
+ * au format HH:MM, une fois par minute
  */
 void jack_bauer(void)
 {
