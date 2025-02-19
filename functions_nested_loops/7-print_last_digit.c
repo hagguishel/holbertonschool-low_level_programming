@@ -1,11 +1,10 @@
 #include "main.h"
 #include <stdlib.h>
 /**
- * print_last_digit - Affiche et retourne le dernier chiffre d'un nombre
- * @n: L'entier dont on veut extraire le dernier chiffre
+ * _abs - Calcule la valeur absolue d'un entier
+ * @n: L'entier dont on veut la valeur absolue
  *
- * Description: Cette fonction extrait le dernier chiffre d'un entier `n`,
- * l'affiche à l'aide de `_putchar`, puis retourne sa valeur absolue.
+ * Return: La valeur absolue de n
  */
 int print_last_digit(int n)
 {
