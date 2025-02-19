@@ -1,5 +1,10 @@
 #include "main.h"
-
+/**
+ * jack_bauer - Affiche chaque minute de la journée (00:00 à 23:59).
+ *
+ * Utilise deux boucles imbriquées pour afficher les heures et minutes
+ * au format HH:MM, une fois par minute, et ajoute un saut de ligne après chaque affichage.
+ */
 void jack_bauer(void)
 {
 	int MM;
