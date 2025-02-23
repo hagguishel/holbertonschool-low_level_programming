@@ -1,43 +1,36 @@
 #include "main.h"
-
+#include <stdio.h>
 /**
- * times_table - Prints the 9 times table, starting from 0.
- *
- * Description: Prints the multiplication table for numbers 0-9,
- * formatted with commas and spaces.
- */
+* times_table - Affiche l'alphabet en lettres minuscules dix fois
+*
+*
+*/
 void times_table(void)
 {
-	int x, y, a;
+	int a;
+	int b;
+	int result;
 
-	for (x = 0; x <= 9; x++)
+	for (a = 0; a <= 9; a++)
 	{
-		for (y = 0; y <= 9; y++)
+		for (b = 0; b <= 9; b++)
 		{
-			a = x * y;
-
-			if (a < 10)
+			result = a * b;
+			if (b != 0)
 			{
-				_putchar((a % 10) + '0');
-				if (y < 9)
-				{
-					_putchar(',');
-					_putchar(' ');
-					_putchar(' ');
-				}
+				_putchar(',');
+				_putchar(' ');
+				if (result < 10)
+				_putchar(' ');
+			}
+			if (result > 9)
+			{
+				_putchar(result / 10 + '0');
+				_putchar(result % 10 + '0');
 			}
 			else
-			{
-				_putchar((a / 10) + '0');
-				_putchar((a % 10) + '0');
-				if (y < 9)
-				{
-					_putchar(',');
-					_putchar(' ');
-				}
-			}
+			_putchar(result + '0');
 		}
-	_putchar('\n');
+		_putchar('\n');
 	}
 }
-
