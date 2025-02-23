@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if CFILE variable is set
+if [ -z "$CFILE" ]; then
+    echo "Error: CFILE variable is not set."
+    exit 1
+fi
+
+# Extract the filename without the extension
+OUTPUT_FILE="${CFILE%.c}.s"
+
+# Compile the C file to assembly using Intel syntax
+gcc -S -masm=intel "$CFILE" -o "$OUTPUT_FILE"
+
+# Check if the compilation was successful
+if [ $? -eq 0 ]; then
+    echo "Assembly code generated in $OUTPUT_FILE"
+else
+    echo "Error: Failed to generate assembly code."
+    exit 1
+fi
