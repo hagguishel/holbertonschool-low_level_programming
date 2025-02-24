@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * print_most_numbers - Affiche les chiffres de 0 à 9 suivis d'un saut de ligne
+ * print_most_numbers - Affiche les chiffres de 0
  */
 void print_most_numbers(void)
 {
@@ -15,4 +15,3 @@ void print_most_numbers(void)
 	}
 	_putchar('\n');
 }
-
