@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 #include <unistd.h>
 
 char *_memset(char *s, char b, unsigned int n);
