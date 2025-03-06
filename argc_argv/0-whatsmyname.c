@@ -1,13 +1,14 @@
 #include <stdio.h>
 /**
- * main - Entry point of the program
- * @argc: Argument count
- * @argv: Argument vector (array of strings)
+ * main - prints the number of arguments
+ * @argc: argument count
+ * @argv: argument vector (unused)
  *
- * Return: Always 0 (Success)
+ * Return: number of arguments
  */
 int main(int argc, char *argv[])
 {
+	(void)argc;
 	printf("%s\n", argv[0]);
 	return (0);
 }
