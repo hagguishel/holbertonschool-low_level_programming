@@ -14,6 +14,12 @@ int _strlen(char *s)
 
 	return (i);
 }
+/**
+ * str_concat - Concatenates two strings.
+ * @s1: First string.
+ * @s2: Second string.
+ * Return: Pointer to new string, or NULL on failure.
+ */
 char *str_concat(char *s1, char *s2)
 {
 	char *lien;
