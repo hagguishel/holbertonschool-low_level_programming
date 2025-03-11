@@ -5,7 +5,6 @@
  *
  * Return: The length of the string
  */
-
 int _strlen(char *s)
 {
 	int i;
@@ -15,7 +14,6 @@ int _strlen(char *s)
 
 	return (i);
 }
-
 /**
  * _strdup - Crée une copie de la chaîne `str`
  * @str: La chaîne à dupliquer
