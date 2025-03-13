@@ -1,28 +1,30 @@
 #include "main.h"
 /**
- * _calloc - Allocates memory for an array and initializes it to zero.
- * @nmemb: Number of elements in the array.
- * @size: Size (in bytes) of each element.
+ * _calloc - Alloue de la mémoire pour un tableau et initialise à zéro.
+ * @nmemb: Nombre d'éléments.
+ * @size: Taille de chaque élément.
  *
- * Return: Pointer to allocated memory, or NULL if nmemb/size is 0 or malloc fails.
+ * Return: Pointeur vers la mémoire allouée ou NULL en cas d'erreur.
  */
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
-	unsigned int i;
-	char *ptr;
 	void *tab;
+	char *ptr;
+	unsigned int i;
 
 	if (nmemb == 0 || size == 0)
 		return (NULL);
 
-	tab = malloc(size *nmemb);
-	if (!tab)
+	tab = malloc(nmemb * size);
+
+	if (tab == NULL)
 		return (NULL);
 
 	ptr = (char *)tab;
 
-	for (i = 0; i < nmemb * size; i++)
+	for (i = 0; i < (nmemb * size); i++)
 		ptr[i] = 0;
 
 	return (tab);
+
 }
