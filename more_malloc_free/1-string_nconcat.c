@@ -30,38 +30,25 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	unsigned int len_s2;
 
 	if (!s1)
-	{
-		s1 = ("");
-	}
+	s1 = "";
+
 	if (!s2)
-	{
-		s2 = ("");
-	}
+	s2 = "";
 
 	if (n < _strlen(s2))
-	{
-		len_s2 = n;
-	}
+	len_s2 = n;
 	else
-	{
-		len_s2 = _strlen(s2);
-	}
-	    
+	len_s2 = _strlen(s2);
+
 	mem = malloc(_strlen(s1) + len_s2 + 1);
 	if (!mem)
-	{
-		return (NULL);
-	}
+	return (NULL);
 
 	for (i = 0; s1[i] != '\0'; i++)
-	{
-		mem[i] = s1[i];
-	}
-
+	mem[i] = s1[i];
 	for (j = 0; j < len_s2 && s2[j] != '\0'; j++, i++)
-	{
-		mem[i] = s2[j];
-	}
+	mem[i] = s2[j];
+
 	mem[i] = '\0';
 
 	return (mem);
