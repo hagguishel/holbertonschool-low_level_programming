@@ -6,7 +6,7 @@
 #include <math.h>
 #include <string.h>
 
-struct dog
+typedef struct dog
 {
 	char *name;
 	float age;
