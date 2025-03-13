@@ -1,55 +1,43 @@
+#include <stdlib.h>
 #include "main.h"
-
 /**
- * _strlen - Returns the length of a string
- * @s: The string to measure
+ * string_nconcat - Concatenates two strings up to n bytes from s2.
+ * @s1: First string.
+ * @s2: Second string.
+ * @n: Number of bytes to concatenate from s2.
  *
- * Return: The length of the string
- */
-unsigned int _strlen(char *s)
-{
-	unsigned int i;
-
-	for (i = 0; s[i] != '\0'; i++)
-	;
-	return (i);
-}
-/**
- * string_nconcat - Concatenates two strings up to n characters of the second.
- * @s1: The first string.
- * @s2: The second string.
- * @n: The number of characters to concatenate from s2.
- *
- * Return: Pointer to the newly allocated space containing the concatenated string,
- *         or NULL if allocation fails.
+ * Return: Pointer to the concatenated string or NULL.
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *mem;
-	unsigned int i, j;
-	unsigned int len_s2;
+	unsigned int lg1 = 0, lg2 = 0, i, j;
+	char *resultat;
 
-	if (!s1)
-	s1 = "";
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
 
-	if (!s2)
-	s2 = "";
+	while (s1[lg1])
+		lg1++;
 
-	if (n < _strlen(s2))
-	len_s2 = n;
-	else
-	len_s2 = _strlen(s2);
+	while (s2[lg2])
+		lg2++;
 
-	mem = malloc((_strlen(s1) + len_s2 + 1) * sizeof(char));
-	if (!mem)
-	return (NULL);
+	if (n > lg2)
+		n = lg2;
 
-	for (i = 0; s1[i] != '\0'; i++)
-	mem[i] = s1[i];
-	for (j = 0; j < len_s2 && s2[j] != '\0'; j++, i++)
-	mem[i] = s2[j];
+	resultat = malloc((lg1 + n + 1) * sizeof(char));
+	if (resultat == NULL)
+		return (NULL);
 
-	mem[i] = '\0';
+	for (i = 0; i < lg1; i++)
+		resultat[i] = s1[i];
 
-	return (mem);
+	for (j = 0; j < n; j++)
+		resultat[i + j] = s2[j];
+
+	resultat[i + j] = '\0';
+
+	return (resultat);
 }
