@@ -9,17 +9,19 @@
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
 	unsigned int i;
-	char *chem;
+	char *ptr;
+	void *tab;
 
 	if (nmemb == 0 || size == 0)
 	return (NULL);
 
-	chem = malloc(size *nmemb);
-	if (!chem)
+	ptr = malloc(size *nmemb);
+	if (!ptr)
 	return (NULL);
 
+	ptr = (char *)tab;
 	for (i = 0; i < nmemb * size; i++)
-	chem[i] = 0;
+	ptr[i] = 0;
 
-	return (chem);
+	return (ptr);
 }
