@@ -1,5 +1,5 @@
-#ifndef FUNCTION_POINTERS_H
-#define FUNCTION_POINTERS_H
+#ifndef MYHEADER_H
+#define MYHEADER_H
 
 #include <stdio.h>
 #include <stdlib.h>
