@@ -7,6 +7,12 @@
  */
 int main(void)
 {
-    times_table();
+    char i;
+
+    for (i = 'z'; i >= 'a'; i--)
+    {
+        _putchar(i);
+        _putchar('\n');
+    }
     return (0);
 }
