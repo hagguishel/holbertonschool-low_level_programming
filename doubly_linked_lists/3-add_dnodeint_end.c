@@ -1,29 +1,39 @@
 #include "lists.h"
 /**
- * add_dnodeint - functio add a new node at
- * the beginning of a list.
- * @head: head of the linked list.
- * @n: element added.
- *
- * Return: adress of the new element or NULL if it failed.
-*/
-dlistint_t *add_dnodeint(dlistint_t **head, const int n)
+ * add_dnodeint_end - Ajoute un noeud a la fin liste doublement chaînée.
+ * @head: Pointeur vers le pointeur du premier nœud de la liste.
+ * @n: Valeur du nouveau noeud.
+ * Return: Adresse du nouveau noeud, ou NULL si l'ajout a échoué.
+ */
+dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)
 {
-	dlistint_t *new_node;
+	dlistint_t *newnode, *temp;
 
-	new_node = malloc(sizeof(dlistint_t));
-	if (!new_node)
+	newnode = malloc(sizeof(dlistint_t));
+
+	if (newnode == NULL)
+	{
 		return (NULL);
+	}
 
-	new_node->n = n;
-	new_node->next = NULL;
-	new_node->prev = (*head);
+	newnode->n = n;
+	newnode->next = NULL;
 
-	if ((*head) != NULL)
-		(*head)->prev = new_node;
+	if ((*head) == NULL)
+	{
+		newnode->prev = NULL;
+		*head = newnode;
+		return (newnode);
+	}
 
-	(*head) = new_node;
+	temp = *head;
+	while (temp->next != NULL)
+	{
+		temp = temp->next;
+	}
 
-	return (new_node);
+	temp->next = newnode;
+	newnode->prev = temp;
 
+	return (newnode);
 }
