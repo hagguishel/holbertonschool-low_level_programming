@@ -2,6 +2,7 @@
     "files.associations": {
         "unistd.h": "c",
         "main.h": "c",
-        "function_pointers.h": "c"
+        "function_pointers.h": "c",
+        "lists.h": "c"
     }
 }
