@@ -54,8 +54,45 @@ void close_files(int fd_from, int fd_to)
 }
 
 /**
- * copy_and_close - Copie contenu d'un fichier à un autre.
+ * copy_first_block - Copie le premier bloc lu avant l'ouverture du fichier destination.
+ * @buffer: Buffer de lecture.
  * @fd_from: Descripteur source.
+ * @file_from: Nom du fichier source.
+ * @file_to: Nom du fichier destination.
+ * @fd_to: Pointeur vers le descripteur de destination à remplir.
+ * Return: Taille du premier bloc lu.
+ */
+ssize_t copy_first_block(char *buffer, int fd_from, char *file_from,
+			 char *file_to, int *fd_to)
+{
+	ssize_t bytes_read, bytes_written;
+
+	bytes_read = read(fd_from, buffer, 1024);
+	if (bytes_read == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
+		free(buffer);
+		close(fd_from);
+		exit(98);
+	}
+
+	*fd_to = open_file_to(file_to);
+
+	bytes_written = write(*fd_to, buffer, bytes_read);
+	if (bytes_written == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		free(buffer);
+		close(fd_from);
+		close(*fd_to);
+		exit(99);
+	}
+	return (bytes_read);
+}
+
+/**
+ * copy_and_close - Copie un fichier vers un autre, puis ferme les deux.
+ * @fd_from: Descripteur du fichier source.
  * @file_from: Nom du fichier source.
  * @file_to: Nom du fichier destination.
  */
@@ -72,25 +109,7 @@ void copy_and_close(int fd_from, char *file_from, char *file_to)
 		exit(99);
 	}
 
-	bytes_read = read(fd_from, buffer, 1024);
-	if (bytes_read == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
-		free(buffer);
-		close(fd_from);
-		exit(98);
-	}
-
-	fd_to = open_file_to(file_to);
-	bytes_written = write(fd_to, buffer, bytes_read);
-	if (bytes_written == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
-		free(buffer);
-		close(fd_from);
-		close(fd_to);
-		exit(99);
-	}
+	bytes_read = copy_first_block(buffer, fd_from, file_from, file_to, &fd_to);
 
 	while ((bytes_read = read(fd_from, buffer, 1024)) > 0)
 	{
