@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * open_file_from - Ouvre uniquement le fichier source en lecture seule.
- * @file: Nom du fichier source.
- * Return: Descripteur de fichier, ou quitte avec code 98 si erreur.
+ * open_file_from - Ouvre un fichier en lecture seule.
+ * @file: Nom du fichier.
+ * Return: Descripteur ou quitte avec code 98.
  */
 int open_file_from(char *file)
 {
@@ -18,9 +18,45 @@ int open_file_from(char *file)
 }
 
 /**
- * copy_and_close - Copie le contenu du fichier source vers le fichier destination.
- * @fd_from: Descripteur du fichier source.
- * @file_from: Nom du fichier source (pour messages d'erreur).
+ * open_file_to - Ouvre un fichier en écriture (création/troncature).
+ * @file: Nom du fichier.
+ * Return: Descripteur ou quitte avec code 99.
+ */
+int open_file_to(char *file)
+{
+	int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+
+	if (fd == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+		exit(99);
+	}
+	return (fd);
+}
+
+/**
+ * close_files - Ferme deux fichiers et gère les erreurs.
+ * @fd_from: Descripteur source.
+ * @fd_to: Descripteur destination.
+ */
+void close_files(int fd_from, int fd_to)
+{
+	if (close(fd_from) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
+		exit(100);
+	}
+	if (close(fd_to) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+		exit(100);
+	}
+}
+
+/**
+ * copy_and_close - Copie contenu d'un fichier à un autre.
+ * @fd_from: Descripteur source.
+ * @file_from: Nom du fichier source.
  * @file_to: Nom du fichier destination.
  */
 void copy_and_close(int fd_from, char *file_from, char *file_to)
@@ -45,15 +81,7 @@ void copy_and_close(int fd_from, char *file_from, char *file_to)
 		exit(98);
 	}
 
-	fd_to = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (fd_to == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
-		free(buffer);
-		close(fd_from);
-		exit(99);
-	}
-
+	fd_to = open_file_to(file_to);
 	bytes_written = write(fd_to, buffer, bytes_read);
 	if (bytes_written == -1)
 	{
@@ -86,19 +114,14 @@ void copy_and_close(int fd_from, char *file_from, char *file_to)
 	}
 
 	free(buffer);
-	if (close(fd_from) == -1 || close(fd_to) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n",
-		        (close(fd_from) == -1) ? fd_from : fd_to);
-		exit(100);
-	}
+	close_files(fd_from, fd_to);
 }
 
 /**
- * main - Point d'entrée du programme.
+ * main - Point d'entrée. Copie un fichier vers un autre.
  * @argc: Nombre d'arguments.
- * @argv: Tableau des arguments.
- * Return: 0 si succès, ou codes d'erreur (97, 98, 99, 100).
+ * @argv: Tableaux d'arguments.
+ * Return: 0 si succès, code d'erreur sinon.
  */
 int main(int argc, char *argv[])
 {
