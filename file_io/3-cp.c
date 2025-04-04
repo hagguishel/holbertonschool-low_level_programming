@@ -1,45 +1,66 @@
 #include "main.h"
 
 /**
- * open_files - Opens the source and destination files.
- * @argv: Array of arguments (file_from and file_to).
- * @fd_from: Pointer to the file descriptor of the source file.
- * @fd_to: Pointer to the file descriptor of the destination file.
+ * open_file_from - Ouvre uniquement le fichier source en lecture seule.
+ * @file: Nom du fichier source.
+ * Return: Descripteur de fichier, ou quitte avec code 98 si erreur.
  */
-void open_files(char *argv[], int *fd_from, int *fd_to)
+int open_file_from(char *file)
 {
-	*fd_from = open(argv[1], O_RDONLY);
-	if (*fd_from == -1)
+	int fd = open(file, O_RDONLY);
+
+	if (fd == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file);
 		exit(98);
 	}
-
-	*fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (*fd_to == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-		close(*fd_from);
-		exit(99);
-	}
+	return (fd);
 }
 
 /**
- * copy_and_close - Copies content from source to destination and closes files.
- * @fd_from: File descriptor of the source file.
- * @fd_to: File descriptor of the destination file.
- * @argv: Array of arguments (used for error messages).
+ * copy_and_close - Copie le contenu du fichier source vers le fichier destination.
+ * @fd_from: Descripteur du fichier source.
+ * @file_from: Nom du fichier source (pour messages d'erreur).
+ * @file_to: Nom du fichier destination.
  */
-
-void copy_and_close(int fd_from, int fd_to, char *argv[])
+void copy_and_close(int fd_from, char *file_from, char *file_to)
 {
 	char *buffer = malloc(1024);
 	ssize_t bytes_read, bytes_written;
+	int fd_to;
 
 	if (!buffer)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't allocate memory\n");
-		close(fd_from), close(fd_to);
+		close(fd_from);
+		exit(99);
+	}
+
+	bytes_read = read(fd_from, buffer, 1024);
+	if (bytes_read == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
+		free(buffer);
+		close(fd_from);
+		exit(98);
+	}
+
+	fd_to = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (fd_to == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		free(buffer);
+		close(fd_from);
+		exit(99);
+	}
+
+	bytes_written = write(fd_to, buffer, bytes_read);
+	if (bytes_written == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		free(buffer);
+		close(fd_from);
+		close(fd_to);
 		exit(99);
 	}
 
@@ -48,15 +69,19 @@ void copy_and_close(int fd_from, int fd_to, char *argv[])
 		bytes_written = write(fd_to, buffer, bytes_read);
 		if (bytes_written == -1)
 		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			free(buffer), close(fd_from), close(fd_to);
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+			free(buffer);
+			close(fd_from);
+			close(fd_to);
 			exit(99);
 		}
 	}
 	if (bytes_read == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		free(buffer), close(fd_from), close(fd_to);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
+		free(buffer);
+		close(fd_from);
+		close(fd_to);
 		exit(98);
 	}
 
@@ -64,26 +89,20 @@ void copy_and_close(int fd_from, int fd_to, char *argv[])
 	if (close(fd_from) == -1 || close(fd_to) == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n",
-		(close(fd_from) == -1) ? fd_from : fd_to);
+		        (close(fd_from) == -1) ? fd_from : fd_to);
 		exit(100);
 	}
 }
 
-
 /**
- * main - Copies the content of one file to another.
- * @argc: Number of arguments passed to the program.
- * @argv: Array of arguments (file_from and file_to).
- *
- * Return: 0 on success, or exit with specific codes on failure:
- *         97 - Incorrect number of arguments.
- *         98 - Cannot read from file_from.
- *         99 - Cannot write to file_to.
- *         100 - Cannot close a file descriptor.
+ * main - Point d'entrée du programme.
+ * @argc: Nombre d'arguments.
+ * @argv: Tableau des arguments.
+ * Return: 0 si succès, ou codes d'erreur (97, 98, 99, 100).
  */
 int main(int argc, char *argv[])
 {
-	int fd_from, fd_to;
+	int fd_from;
 
 	if (argc != 3)
 	{
@@ -91,8 +110,8 @@ int main(int argc, char *argv[])
 		exit(97);
 	}
 
-	open_files(argv, &fd_from, &fd_to);
-	copy_and_close(fd_from, fd_to, argv);
+	fd_from = open_file_from(argv[1]);
+	copy_and_close(fd_from, argv[1], argv[2]);
 
 	return (0);
 }
