@@ -1,74 +1,98 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-
-#define BUFFER_SIZE 1024
+#include "main.h"
 
 /**
- * print_error - Gère l'affichage d'erreurs et quitte avec le bon code
- * @code: code de sortie
- * @message: message d'erreur
- * @arg: argument à afficher (nom du fichier ou fd)
+ * open_files - Opens the source and destination files.
+ * @argv: Array of arguments (file_from and file_to).
+ * @fd_from: Pointer to the file descriptor of the source file.
+ * @fd_to: Pointer to the file descriptor of the destination file.
  */
-void print_error(int code, const char *message, const char *arg)
+void open_files(char *argv[], int *fd_from, int *fd_to)
 {
-	if (code == 100)
-		dprintf(STDERR_FILENO, "%s %d\n", message, atoi(arg));
-	else
-		dprintf(STDERR_FILENO, "%s %s\n", message, arg);
-	exit(code);
+	*fd_from = open(argv[1], O_RDONLY);
+	if (*fd_from == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
+
+	*fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (*fd_to == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		close(*fd_from);
+		exit(99);
+	}
 }
 
 /**
- * main - copie le contenu d'un fichier dans un autre
- * @ac: nombre d'arguments
- * @av: tableau d'arguments
- *
- * Return: 0 en cas de succès, un code d’erreur sinon
+ * copy_and_close - Copies content from source to destination and closes files.
+ * @fd_from: File descriptor of the source file.
+ * @fd_to: File descriptor of the destination file.
+ * @argv: Array of arguments (used for error messages).
  */
-int main(int ac, char **av)
+
+void copy_and_close(int fd_from, int fd_to, char *argv[])
 {
-	int fd_from, fd_to;
-	ssize_t r, w;
-	char buffer[BUFFER_SIZE];
+	char *buffer = malloc(1024);
+	ssize_t bytes_read, bytes_written;
 
-	if (ac != 3)
-		print_error(97, "Usage: cp file_from file_to", "");
-
-	fd_from = open(av[1], O_RDONLY);
-	if (fd_from == -1)
-		print_error(98, "Error: Can't read from file", av[1]);
-
-	fd_to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (fd_to == -1)
+	if (!buffer)
 	{
-		close(fd_from);
-		print_error(99, "Error: Can't write to", av[2]);
+		dprintf(STDERR_FILENO, "Error: Can't allocate memory\n");
+		close(fd_from), close(fd_to);
+		exit(99);
 	}
 
-	while ((r = read(fd_from, buffer, BUFFER_SIZE)) > 0)
+	while ((bytes_read = read(fd_from, buffer, 1024)) > 0)
 	{
-		w = write(fd_to, buffer, r);
-		if (w == -1 || w != r)
+		bytes_written = write(fd_to, buffer, bytes_read);
+		if (bytes_written == -1)
 		{
-			close(fd_from);
-			close(fd_to);
-			print_error(99, "Error: Can't write to", av[2]);
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			free(buffer), close(fd_from), close(fd_to);
+			exit(99);
 		}
 	}
-	if (r == -1)
+	if (bytes_read == -1)
 	{
-		close(fd_from);
-		close(fd_to);
-		print_error(98, "Error: Can't read from file", av[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		free(buffer), close(fd_from), close(fd_to);
+		exit(98);
 	}
 
-	if (close(fd_from) == -1)
-		print_error(100, "Error: Can't close fd", av[1]);
+	free(buffer);
+	if (close(fd_from) == -1 || close(fd_to) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n",
+		(close(fd_from) == -1) ? fd_from : fd_to);
+		exit(100);
+	}
+}
 
-	if (close(fd_to) == -1)
-		print_error(100, "Error: Can't close fd", av[2]);
+
+/**
+ * main - Copies the content of one file to another.
+ * @argc: Number of arguments passed to the program.
+ * @argv: Array of arguments (file_from and file_to).
+ *
+ * Return: 0 on success, or exit with specific codes on failure:
+ *         97 - Incorrect number of arguments.
+ *         98 - Cannot read from file_from.
+ *         99 - Cannot write to file_to.
+ *         100 - Cannot close a file descriptor.
+ */
+int main(int argc, char *argv[])
+{
+	int fd_from, fd_to;
+
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
+
+	open_files(argv, &fd_from, &fd_to);
+	copy_and_close(fd_from, fd_to, argv);
 
 	return (0);
 }
